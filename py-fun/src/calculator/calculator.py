@@ -1,21 +1,17 @@
-class SingletonFunction:
-
+class SingletonMeta(type):
+    """
+    This is a thread-safe implementation of Singleton.
+    """
     _instances = {}
 
-    def __init__(self, func):
-        self.func = func
-
-    def __get__(self, instance, owner):
-        """Bind method to instance properly."""
-        def wrapper(*args, **kwargs):
-            key = self.func.__name__
-            if key not in self._instances:
-                self._instances[key] = self.func
-            return self.func(instance, *args, **kwargs)
-        return wrapper
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
+        return cls._instances[cls]
 
 
-class Calculator:
+class Calculator(metaclass=SingletonMeta):
     ENGLISH_NUMBERS = {
         "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4,
         "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9,
@@ -44,42 +40,25 @@ class Calculator:
         "C": 100, "D": 500, "M": 1000
     }
 
-    # ---------------------------
-    # Singleton-decorated methods
-    # ---------------------------
-
-    @SingletonFunction
     def add(self, a, b):
-        a_num = self.parse_input(a)
-        b_num = self.parse_input(b)
-        return a_num + b_num
+        return self.parse_input(a) + self.parse_input(b)
 
-    @SingletonFunction
     def sub(self, a, b):
-        a_num = self.parse_input(a)
-        b_num = self.parse_input(b)
-        return a_num - b_num
+        return self.parse_input(a) - self.parse_input(b)
 
-    @SingletonFunction
     def mul(self, a, b):
-        a_num = self.parse_input(a)
-        b_num = self.parse_input(b)
-        return a_num * b_num
+        return self.parse_input(a) * self.parse_input(b)
 
-    @SingletonFunction
     def div(self, a, b):
-        a_num = self.parse_input(a)
         b_num = self.parse_input(b)
         if b_num == 0:
             raise ValueError("Cannot divide by zero")
-        return a_num / b_num
+        return self.parse_input(a) / b_num
 
-    @SingletonFunction
     def factorize(self, n):
         n_num = self.parse_input(n)
         if not isinstance(n_num, int) or n_num < 2:
             raise ValueError("Can only factorize integers >= 2")
-
         factors = []
         divisor = 2
         while divisor * divisor <= n_num:
@@ -91,33 +70,25 @@ class Calculator:
             factors.append(n_num)
         return factors
 
-    # ---------------------------
-    # Input parsing utilities
-    # ---------------------------
-
     def parse_input(self, val):
         if isinstance(val, (int, float)):
             return val
 
         val = val.strip().lower()
 
-        # Check known number dictionaries
-        if val in self.ENGLISH_NUMBERS:
-            return self.ENGLISH_NUMBERS[val]
-        if val in self.SPANISH_NUMBERS:
-            return self.SPANISH_NUMBERS[val]
-        if val in self.RUSSIAN_NUMBERS:
-            return self.RUSSIAN_NUMBERS[val]
-        if val in self.CHINESE_NUMBERS:
-            return self.CHINESE_NUMBERS[val]
+        # Dictionaries
+        for d in [self.ENGLISH_NUMBERS, self.SPANISH_NUMBERS,
+                  self.RUSSIAN_NUMBERS, self.CHINESE_NUMBERS]:
+            if val in d:
+                return d[val]
 
-        # Try float
+        # Try float conversion
         try:
             return float(val)
         except ValueError:
             pass
 
-        # Try Roman numerals
+        # Try Roman numeral
         try:
             return self.parse_roman(val.upper())
         except ValueError:
@@ -135,7 +106,6 @@ class Calculator:
             else:
                 total -= value
             prev_value = value
-
         if total <= 0:
             raise ValueError(f"Invalid Roman numeral: {roman}")
         return total

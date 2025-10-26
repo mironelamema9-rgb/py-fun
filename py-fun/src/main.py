@@ -9,7 +9,6 @@ def main():
     else:
         print("different Calculator instances")
 
-    # All the 25 test cases
     print(f'1: c1.add(1, 2)        -> {c1.add(1, 2)}')
     print(f'2: c2.add(8, 3)        -> {c2.add(8, 3)}')
     print(f'3: c1.add("1", "1")    -> {c1.add("1", "1")}')
@@ -35,7 +34,6 @@ def main():
     print(f'23: c2.factorize(32768)         -> {c2.factorize(32768)}')
     print(f'24: c2.factorize(10952347)      -> {c2.factorize(10952347)}')
     print(f'25: c2.factorize(100000039)     -> {c2.factorize(100000039)}')
-
 
 if __name__ == "__main__":
     main()
