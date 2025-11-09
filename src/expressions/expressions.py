@@ -1,81 +1,50 @@
-
 class Expressions:
-    """"
-    Fill in one-line expressions (no own functions) to initialize attributes
-    self.b .. self.k with specified values.
+    def __init__(self, numbers=None):
+        self.numbers = numbers if numbers is not None else [4, 12, 3, 8, 17, 12, 1, 8, 7]
 
-    Use Python built-in functions, list expressions and list comprehension,
-    but NOT own functions.
+        # a) number of numbers
+        self.a = len(self.numbers)
 
-    Complete tasks one after another. Once you are done with one task,
-    uncomment test cases in test_expressions.py. Remove comments for
-      # Test_case_b = Test_case
-      # Test_case_c = Test_case
-      # Test_case_d = Test_case
-      # ...
-    Run tests in IDE and in a terminal:
-      python test_expressions.py
-      python -m unittest
-    """
+        # b) first three numbers
+        self.b = self.numbers[:3]
 
-    default_numbers=[4, 12, 3, 8, 17, 12, 1, 8, 7]
+        # c) last three numbers
+        self.c = self.numbers[-3:]
 
-    def __init__(self, _numbers=default_numbers):
-        """
-        Constructor to initialize member variables.
-        """
-        self.numbers = _numbers
+        # d) last three numbers reversed
+        self.d = self.c[::-1]
 
-        # a) initialize with number of numbers: 9
-        self.a = len(self.numbers)    # <-- given solution, insert one-line expressions below
+        # e) odd numbers
+        self.e = [n for n in self.numbers if n % 2]
 
-        # b) initialize with first three numbers: [4, 12, 3]
-        self.b = []      # <-- write expression here
+        # f) number of odd numbers
+        self.f = len(self.e)
 
-        # c) initialize with last three numbers: [1, 8, 7]
-        self.c = []
+        # g) sum of odd numbers
+        self.g = sum(self.e)
 
-        # d) initialize with last three numbers reverse: [7, 8, 1]
-        self.d = []
+        # h) remove duplicates (keep first appearance)
+        seen = set()
+        self.h = [x for x in self.numbers if not (x in seen or seen.add(x))]
 
-        # e) initialize with odd numbers: [3, 17, 1, 7]
-        self.e = []
+        # i) number of duplicates
+        self.i = len(self.numbers) - len(self.h)
 
-        # f) initialize with number of odd numbers: 4
-        self.f = 0
+        # j) ascending squared numbers without duplicates
+        self.j = [n**2 for n in sorted(set(self.numbers))]
 
-        # g) initialize with sum_ of odd numbers: 28
-        self.g = 0
-
-        # h) duplicate numbers removed: [4, 12, 3, 8, 17, 1, 7]
-        self.h = []
-
-        # i) number of duplicate numbers: 2
-        self.i = 0
-
-        # j) ascending list of squared numbers with no duplicates: [1, 9, 16, 49, 64, 144, 289]
-        self.j = []
-
-        # k) initialize with "ODD_LIST", "EVEN_LIST" or "EMPTY_LIST" depending on numbers length
-        self.k = "NEITHER"
-
+        # k) classify list length
+        self.k = "EMPTY_LIST" if not self.numbers else ("ODD_LIST" if len(self.numbers) % 2 else "EVEN_LIST")
 
     def print_results(self):
-        print(f'\nnumbers: {self.numbers}\n#')
-        fmt = {
-            # key: (value, output string)
-            'a': (self.a, 'number of numbers'),
-            'b': (self.b, 'first three numbers'),
-            'c': (self.c, 'last three numbers'),
-            'd': (self.d, 'last three numbers reverse'),
-            'e': (self.e, 'odd numbers'),
-            'f': (self.f, 'number of odd numbers'),
-            'g': (self.g, 'sum of odd numbers'),
-            'h': (self.h, 'duplicate numbers removed'),
-            'i': (self.i, 'number of duplicate numbers'),
-            'j': (self.j, 'ascending, de-dup (n^2) numbers'),
-            'k': (self.k, 'length'),
-        }
-        # format output, e.g.: "b) first three numbers: [1, 4, 6]"
-        for k in sorted(fmt.keys()):
-            print(f'{k}) {fmt[k][1]}: {fmt[k][0]}')
+        print(f"a) number of numbers: {self.a}")
+        print(f"b) first three numbers: {self.b}")
+        print(f"c) last three numbers: {self.c}")
+        print(f"d) last three numbers reversed: {self.d}")
+        print(f"e) odd numbers: {self.e}")
+        print(f"f) number of odd numbers: {self.f}")
+        print(f"g) sum of odd numbers: {self.g}")
+        print(f"h) duplicate numbers removed: {self.h}")
+        print(f"i) number of duplicate numbers: {self.i}")
+        print(f"j) ascending squared numbers (no duplicates): {self.j}")
+        print(f"k) length label: {self.k}")
