@@ -90,10 +90,6 @@ class Calculator(metaclass=SingletonMeta):
 
         # Try Roman numeral
         try:
-            return self.parse_roman(val.upper())
-        except ValueError:
-            pass
-
         raise ValueError(f"Cannot parse input: {val}")
 
     def parse_roman(self, roman):
@@ -108,4 +104,8 @@ class Calculator(metaclass=SingletonMeta):
             prev_value = value
         if total <= 0:
             raise ValueError(f"Invalid Roman numeral: {roman}")
-        return total
+
+            return self.parse_roman(val.upper())
+        except ValueError:
+            pass
+       return total

@@ -18,7 +18,7 @@ from . import Expressions
 """
 tested objects (objects "under test", "ut") as instances of the Expressions class
 """
-ut1 = Expressions(Expressions.default_numbers)  # [4, 12, 3, 8, 17, 12, 1, 8, 7]
+ut1 = Expressions()  # default numbers internally
 ut2 = Expressions([1, 4, 6, 67, 6, 8, 23, 8, 34, 49, 67, 6, 8, 23, 37, 67, 6, 34, 19, 67, 6, 8])
 ut3 = Expressions([6, 67, 6, 8, 17, 3, 6, 8])
 ut4 = Expressions([8, 3, 9])
@@ -83,8 +83,8 @@ class TestCase_a_number_of_numbers(Test_case_a):
 
 
 class TestCase_b_first_three_numbers(Test_case_b):
-    # 
-    # tests b): first three numbers
+     #
+     #tests b): first three numbers
     def test_b_first_three_numbers(self):
         self.assertEqual(self.ut1.b, [4, 12, 3])
         self.assertEqual(self.ut2.b, [1, 4, 6])
@@ -97,8 +97,8 @@ class TestCase_b_first_three_numbers(Test_case_b):
 
 
 class TestCase_c_last_three_numbers(Test_case_c):
-    # 
-    # tests c): last three numbers
+     #
+     #tests c): last three numbers
     def test_c_last_three_numbers(td):
         td.assertEqual(td.ut1.c, [1, 8, 7])
         td.assertEqual(td.ut2.c, [67, 6, 8])
